@@ -8,7 +8,7 @@
             "name": "backend",
             "request": "launch",
             "type": "dart",
-            "program": "lib/backend.dart"
+            "program": "bin/backend.dart"
         }
     ]
     
