@@ -14,10 +14,11 @@ void main() async {
   var handler =
       Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
 
-  String address = await CustomEnv.get<String>(key: 'server_address');
+  //String address = await CustomEnv.get<String>(key: 'server_address');
+  String address = 'localhost';
   int port = await CustomEnv.get<int>(key: 'server_port');
 
-  print(address);
+  print(address.runtimeType);
 
   await CustomServer().initialize(
     handler: handler, 
