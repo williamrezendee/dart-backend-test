@@ -1,14 +1,15 @@
 import 'package:shelf/shelf.dart';
 
-import 'api/blog_api.dart';
-import 'api/login_api.dart';
+import 'apis/blog_api.dart';
+import 'apis/login_api.dart';
 import 'infra/custom_server.dart';
+import 'services/news_service.dart';
 import 'utils/custom_env.dart';
 
 void main() async {
   var cascadeHandler = Cascade() // Build Pattern
       .add(LoginApi().handler)
-      .add(BlogApi().handler)
+      .add(BlogApi(NewsService()).handler)
       .handler;
 
   var handler =
@@ -21,7 +22,7 @@ void main() async {
   print(address.runtimeType);
 
   await CustomServer().initialize(
-    handler: handler, 
+    handler: handler,
     address: address,
     port: port,
   );
