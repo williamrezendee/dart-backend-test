@@ -1,10 +1,11 @@
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../models/news.dart';
 import '../services/generic_service.dart';
 
 class BlogApi {
-  final GenericService _service;
+  final GenericService<News> _service;
 
   BlogApi(this._service);
 
@@ -13,8 +14,8 @@ class BlogApi {
 
     // Read
     router.get('/blog/news', (Request request) {
-      // _service.findAll();
-      return Response.ok('Reading news');
+      List<News> news = _service.findAll();
+      return Response.ok(news);
     });
 
     // Create

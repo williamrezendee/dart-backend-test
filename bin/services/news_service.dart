@@ -1,28 +1,37 @@
 import '../models/news.dart';
 import 'generic_service.dart';
 
+import '../utils/list_extension.dart';
+
 class NewsService implements GenericService<News> {
+
+  final List<News> _fakeDB = [];
   @override
   bool delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    _fakeDB.removeWhere((element) => element.id == id);
+    return true;
   }
 
   @override
   List<News> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
+    return _fakeDB;
   }
 
   @override
   News findOne(int id) {
-    // TODO: implement findOne
-    throw UnimplementedError();
+    return _fakeDB.firstWhere((element) => element.id == id);
+
   }
 
   @override
   bool save(News value) {
-    // TODO: implement save
-    throw UnimplementedError();
+    News? news = _fakeDB.firstWhereOrNull((element) => element.id == value.id);
+    if (news == null) {
+      _fakeDB.add(value);
+    } else {
+      var index = _fakeDB.indexOf(news);
+      _fakeDB[index] = value;
+    }
+    return true;
   }
 }
