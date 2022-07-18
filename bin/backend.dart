@@ -3,6 +3,7 @@ import 'package:shelf/shelf.dart';
 import 'apis/blog_api.dart';
 import 'apis/login_api.dart';
 import 'infra/custom_server.dart';
+import 'infra/middleware_interception.dart';
 import 'services/news_service.dart';
 import 'utils/custom_env.dart';
 
@@ -13,7 +14,7 @@ void main() async {
       .handler;
 
   var handler =
-      Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
+      Pipeline().addMiddleware(logRequests()).addMiddleware(MiddlewareInterception().middleware).addHandler(cascadeHandler);
 
   //String address = await CustomEnv.get<String>(key: 'server_address');
   String address = 'localhost';

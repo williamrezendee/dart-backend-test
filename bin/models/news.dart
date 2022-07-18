@@ -1,5 +1,5 @@
 class News {
-  final int id;
+  final int? id;
   final String title;
   final String description;
   final String image;
@@ -14,6 +14,28 @@ class News {
     this.publicationDate,
     this.publicationUpdateDate,
   );
+
+  factory News.fromJson(Map map) {
+    return News(
+      map['id'] ?? '', 
+      map['title'], 
+      map['description'], 
+      map['image'], 
+      DateTime.fromMicrosecondsSinceEpoch((map['publicationDate'])), 
+      map['publicationUpdateDate'] != null
+        ? DateTime.fromMicrosecondsSinceEpoch((map['publicationUpdateDate']))
+        : null,
+    );
+  }
+
+  Map toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'image': image
+    };
+  }
 
   @override
   String toString() {

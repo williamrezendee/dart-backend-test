@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -15,13 +17,15 @@ class BlogApi {
     // Read
     router.get('/blog/news', (Request request) {
       List<News> news = _service.findAll();
-      return Response.ok(news);
+      List<Map> mapNews = news.map((e) => e.toJson()).toList();
+      return Response.ok(jsonEncode(mapNews));
     });
 
     // Create
-    router.post('/blog/news', (Request request) {
-      // _service.save('value');
-      return Response.ok('Creating news');
+    router.post('/blog/news', (Request request) async {
+      var body = await request.readAsString();
+      _service.save(News.fromJson(jsonDecode(body)));
+      return Response(201);
     });
 
     // Update
